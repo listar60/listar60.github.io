@@ -8,9 +8,9 @@ palette and Reddit Sans / JetBrains Mono pairing to a personal portfolio.
 
 ## Editing
 
-Update `index.html` for the homepage and `resume.html` for the public resume.
-The original resume, home address, and phone number are deliberately not
-published.
+Update `index.html` for the homepage. It offers no resume download, and no
+standalone resume files are deployed. The original resume, home address, and
+phone number are deliberately not published.
 
 ```sh
 npm ci
@@ -25,9 +25,9 @@ npm test
 npm run build
 ```
 
-`build` regenerates the one-page resume PDF and social preview. To replace the
-avatar, run `npm run build -- /path/to/portrait.png`; it creates responsive WebP
-images without copying source metadata. Font licenses are in `assets/fonts/`.
+`build` regenerates the social preview. To replace the avatar, run
+`npm run build -- /path/to/portrait.png`; it creates responsive WebP images
+without copying source metadata. Font licenses are in `assets/fonts/`.
 
 GitHub Pages serves the committed files from the root of `main`; no server,
 API keys, or build service is needed.

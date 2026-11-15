@@ -224,34 +224,40 @@ test("reduced motion disables all automatic animation", async ({ page }) => {
   await expect(page.locator(".hero__copy")).toHaveCSS("opacity", "1");
 });
 
-test("resume download, public-safe content, and sharing assets", async ({
+test("bachelor's entry prominently includes the Computer Science minor", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const degree = page
+    .locator(".education li")
+    .filter({ hasText: "B.S. Biological Engineering" })
+    .locator("p");
+  await expect(degree).toContainText("B.S. Biological Engineering");
+  await expect(degree).toContainText("Minor in Computer Science");
+});
+
+test("resume downloads are unavailable and sharing assets remain valid", async ({
   page,
   request,
 }) => {
   await page.goto("/");
-  const downloadPromise = page.waitForEvent("download");
-  await page
-    .locator(".hero")
-    .getByRole("link", { name: "Download resume" })
-    .click();
-  const download = await downloadPromise;
-  expect(download.suggestedFilename()).toBe("Xingtai-Li-Resume.pdf");
+  await expect(
+    page.locator('a[download], a[href*="resume"], a[href$=".pdf"]'),
+  ).toHaveCount(0);
+  await page.locator(".hero").getByRole("link", { name: "About me" }).click();
+  await expect(page).toHaveURL(/#about$/);
 
-  const pdf = await request.get("/assets/xingtai-li-resume.pdf");
-  expect(pdf.ok()).toBe(true);
-  expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  for (const route of [
+    "/assets/xingtai-li-resume.pdf",
+    "/resume.html",
+    "/resume.css",
+  ]) {
+    expect((await request.get(route)).status()).toBe(404);
+  }
+
   const image = await request.get("/assets/social-preview.png");
   expect(image.ok()).toBe(true);
   expect((await image.body()).subarray(0, 8).toString("hex")).toBe(
     "89504e470d0a1a0a",
   );
-
-  await page.goto("/resume.html");
-  const resume = await page.locator("body").innerText();
-  expect(resume).toContain("Senior Staff Machine Learning Engineer");
-  expect(resume).toContain("University of California, Davis");
-  expect(resume).not.toMatch(/\b\d{5}(?:-\d{4})?\b/);
-  expect(resume).not.toMatch(/\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}/);
-  expect(resume).not.toContain("Gen6");
-  expect(resume).not.toContain("PERSONAL_GH_TOKEN");
 });

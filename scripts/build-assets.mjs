@@ -12,7 +12,6 @@ const mime = {
   ".svg": "image/svg+xml",
   ".woff2": "font/woff2",
   ".png": "image/png",
-  ".pdf": "application/pdf",
 };
 
 const server = createServer(async (request, response) => {
@@ -110,16 +109,7 @@ try {
     await stat(path.join(root, "assets/avatar.webp"));
   }
 
-  await page.goto(`${base}/resume.html`);
-  await page.evaluate(() => document.fonts.ready);
-  await page.pdf({
-    path: path.join(root, "assets/xingtai-li-resume.pdf"),
-    format: "Letter",
-    preferCSSPageSize: true,
-    printBackground: true,
-    tagged: true,
-  });
-
+  await page.goto(base);
   await page.setViewportSize({ width: 1200, height: 630 });
   await page.setContent(`<!doctype html><html lang="en"><head>
     <style>
@@ -141,7 +131,7 @@ try {
   await page.screenshot({
     path: path.join(root, "assets/social-preview.png"),
   });
-  console.log("Generated public-safe resume PDF and 1200x630 social preview.");
+  console.log("Generated 1200x630 social preview.");
 } finally {
   if (browser) await browser.close();
   await new Promise((resolve) => server.close(resolve));

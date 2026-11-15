@@ -8,8 +8,8 @@
     "start": "python3 -m http.server 4173 --bind 127.0.0.1",
     "build": "node scripts/build-assets.mjs",
     "test": "playwright test",
-    "format": "prettier --write index.html resume.html styles.css resume.css script.js scripts/*.mjs tests/*.js playwright.config.js package.json && prettier --write assets/favicon.svg --parser html",
-    "format:check": "prettier --check index.html resume.html styles.css resume.css script.js scripts/*.mjs tests/*.js playwright.config.js package.json && prettier --check assets/favicon.svg --parser html"
+    "format": "prettier --write index.html styles.css script.js scripts/*.mjs tests/*.js playwright.config.js package.json && prettier --write assets/favicon.svg --parser html",
+    "format:check": "prettier --check index.html styles.css script.js scripts/*.mjs tests/*.js playwright.config.js package.json && prettier --check assets/favicon.svg --parser html"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
