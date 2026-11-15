@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+.taste-skill/
+.test-artifacts/
+test-results/
+playwright-report/
+*.log
+.env
+.env.*
