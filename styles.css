@@ -841,7 +841,7 @@ summary:focus-visible {
   font-size: 18px;
 }
 
-.contact__email {
+.contact__link {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -856,7 +856,7 @@ summary:focus-visible {
   letter-spacing: -0.04em;
 }
 
-.contact__email .arrow {
+.contact__link .arrow {
   width: 40px;
   height: 40px;
 }
@@ -923,7 +923,7 @@ summary:focus-visible {
 
   .btn:hover .arrow,
   .link:hover .arrow,
-  .contact__email:hover .arrow {
+  .contact__link:hover .arrow {
     transform: translateX(3px);
   }
 }
@@ -1442,14 +1442,14 @@ summary:focus-visible {
     font-size: clamp(44px, 10.8vw, 64px);
   }
 
-  .contact__email {
+  .contact__link {
     justify-content: flex-start;
     gap: 16px;
     margin-top: 32px;
     font-size: clamp(26px, 6.9vw, 40px);
   }
 
-  .contact__email .arrow {
+  .contact__link .arrow {
     width: 24px;
     height: 24px;
   }
@@ -1532,7 +1532,7 @@ summary:focus-visible {
     font-size: 14px;
   }
 
-  .contact__email {
+  .contact__link {
     gap: 12px;
     font-size: 26px;
   }
@@ -1559,7 +1559,7 @@ summary:focus-visible {
   .work-card:focus-within,
   .btn:hover .arrow,
   .link:hover .arrow,
-  .contact__email:hover .arrow {
+  .contact__link:hover .arrow {
     transform: none;
   }
 }

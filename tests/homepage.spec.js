@@ -59,7 +59,7 @@ for (const viewport of viewports) {
 
     for (const control of await page
       .locator(
-        ".btn, .desktop-navigation a, .mobile-menu summary, .footer-links a",
+        ".btn, .desktop-navigation a, .mobile-menu summary, .footer-links a, .contact__link",
       )
       .all()) {
       if (await control.isVisible()) {
@@ -202,12 +202,38 @@ test("content remains usable without JavaScript", async ({ browser }) => {
         .locator(".mobile-menu")
         .getByRole("link", { name: "About", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".contact__email")).toHaveAttribute(
+    await expect(page.locator(".contact__link")).toHaveAttribute(
       "href",
-      "mailto:listar60@gmail.com",
+      "https://www.linkedin.com/in/xingtai-li-287b35105/",
     );
   } finally {
     await context.close();
+  }
+});
+
+test("contact uses LinkedIn without email or GitHub profile links", async ({
+  page,
+}) => {
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    await expect(
+      page.locator('a[href^="mailto:"], a[href^="https://github.com/"]'),
+    ).toHaveCount(0);
+
+    const contact = page
+      .locator("#contact")
+      .getByRole("link", { name: "Connect on LinkedIn", exact: true });
+    await expect(contact).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/xingtai-li-287b35105/",
+    );
+    await expect(contact).toHaveAttribute("target", "_blank");
+    await expect(contact).toHaveAttribute("rel", "noopener noreferrer");
+    await page.locator(".nav__contact").click();
+    await expect(page).toHaveURL(/#contact$/);
+    await expect(contact).toBeInViewport();
   }
 });
 
